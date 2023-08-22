@@ -26,8 +26,5 @@ up = ui.upload(on_upload=handle_upload,
                max_file_size=50_000_000, # 50 megabytes max file size
                 label= "Upload a CSV file"
                ) 
-""" 
-
- """
 
 ui.run()
