@@ -2,11 +2,11 @@ Cross-sectional linear regression:
 
 ### To do:
 
-* Drop down menu for main predictor
-* Drop down menu for main outcome
-* Expanding checklist for confounders
-* Run test button
+* Add more todos
 
 ### Done:
 
 * Upload data button
+* Drop down menu for main predictor
+* Drop down menu for main outcome
+* Expanding checklist for confounders

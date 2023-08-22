@@ -17,14 +17,28 @@ def handle_upload(event: events.UploadEventArguments) -> None:
     csv_file.upload_csv(event)
     
     with ui.column():
-        ui.button("Print first column", 
-                  on_click=lambda: print(csv_file.cols))            
+        ui.select(label= "Select outcome variable",
+                  with_input=True,
+                  options=csv_file.cols,
+                  value=csv_file.cols[1]) \
+                      .classes("w-80")
+        ui.select(label= "Select predictor variable",
+                  options=csv_file.cols,
+                  with_input=True,
+                  value=csv_file.cols[2]) \
+                      .classes("w-80")
+        ui.select(label= "Select confounder variables",
+                  options=csv_file.cols,
+                  multiple=True,
+                  value=csv_file.cols[3]) \
+                      .classes("w-80").props("use-chips")
 
-up = ui.upload(on_upload=handle_upload,
-               auto_upload=True,
-               max_files=1,
-               max_file_size=50_000_000, # 50 megabytes max file size
-                label= "Upload a CSV file"
-               ) 
+with ui.card():
+    ui.upload(on_upload=handle_upload,
+              auto_upload=True,
+              max_files=1,
+              max_file_size=50_000_000, # 50 megabytes max file size
+              label= "Upload a CSV file") 
+ui.label("I'm here")
 
 ui.run()
