@@ -1,0 +1,12 @@
+Cross-sectional linear regression:
+
+### To do:
+
+* Drop down menu for main predictor
+* Drop down menu for main outcome
+* Expanding checklist for confounders
+* Run test button
+
+### Done:
+
+* Upload data button
