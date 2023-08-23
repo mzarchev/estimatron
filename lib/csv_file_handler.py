@@ -3,7 +3,7 @@ from nicegui import events
 import pandas as pd
 
 
-class csvFile:
+class CsvFileHandler:
     def __init__(self):
         self.df = None
         self.cols = []
