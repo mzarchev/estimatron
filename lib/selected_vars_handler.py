@@ -1,13 +1,11 @@
-from nicegui import events, ui
-import lib.csv_file_handler
-
-csv_file_handler = lib.csv_file_handler.CsvFileHandler()
+from nicegui import ui
 
 class SelectedVarsHandler:
     def __init__(self):
-        self.outc = ""
-        self.pred = ""
+        self.outc: str = None
+        self.pred: str = None
         self.conf = []
+        self.specified = False
     
     def assign_value(self, value:str | list, var:str) -> None:
         """ 
@@ -19,29 +17,32 @@ class SelectedVarsHandler:
             self.pred = value
         elif var == "conf":
             self.conf = value
-    
-    
-    def generate_selects(self, event: events.UploadEventArguments) -> None:
-        """ 
-        Passes the event from the upload selector to the csv handler
-        Generates selection fields based on the columns of the csv file
-        """
-        csv_file_handler.upload_csv(event)
         
+        # Indicates both pred and outcome have been correctly specified    
+        if self.outc and self.pred and self.pred != self.outc:
+            self.specified = True 
+        else:
+            self.specified = False
+    
+    def generate_selects(self, vars: list) -> None:
+        """ 
+        Takes a list of variable names as input
+        Generates three selection fields
+        """
         with ui.column():
             ui.select(
                 label="Select outcome variable",
-                value="Outcome",
+                value="",
                 with_input=True,                  
-                options=csv_file_handler.cols,
+                options=vars,
                 on_change=lambda e: self.assign_value(value=e.value,
                                                       var="outc")
                 ) \
                     .classes("w-80") 
             ui.select(
                 label="Select predictor variable",
-                value="Predictor",
-                options=csv_file_handler.cols,
+                value="",
+                options=vars,
                 with_input=True,
                 on_change=lambda e: self.assign_value(value=e.value,    
                                                       var="pred")
@@ -49,8 +50,8 @@ class SelectedVarsHandler:
                     .classes("w-80") 
             ui.select(
                 label="Select confounder variables",
-                value="Confounders",
-                options=csv_file_handler.cols,
+                value="",
+                options=vars,
                 multiple=True,
                 on_change=lambda e: self.assign_value(value=e.value,    
                                                       var="conf")
